@@ -1,0 +1,37 @@
+<html>
+
+<head>
+<title> Database</title>
+<link rel="stylesheet" value="style.css">
+</head>
+<body>
+<h1>CRUD Operations</h1>
+<p>This page contain database records</p>
+<table border=1>
+<tr><th>ID</th>
+<th>Names</th>
+<th>Contact</th>
+<th>Address</th>
+<th>Amount</th>
+<th>Update</th>
+</tr>
+{% for val in data %}
+<tr>
+<td>{{val.ID}}</td>
+<td>{{val.Name}}</td>
+<td>{{val.Contact}}</td>
+<td>{{val.Address}}</td>
+<td>{{val.Amount}}</td>
+<td><button><a href="{{url_for('edituser',id=val.ID)}}">Edit</button></td>
+<td><button><a href="{{url_for('deleteuser',id=val.ID)}}">Delete</button></td></tr>
+
+{% endfor %}
+<br><br>
+<button><a href="{{url_for("addusers")}}">Add</a></button>
+
+<form action='{{url_for('delete')}}' method='post'>
+<label>enter id to delete</label>
+<input type="integer" name='id' required >
+<input type="submit" value="delete"></form>
+</body>
+</html>
