@@ -1,16 +1,20 @@
 <html>
 <head><title>register</title>
+<link rel="stylesheet" href={{url_for('static',filename="style2.css")}}/>
 </head>
-<body>
-<form  action='' method='post'>
-<label >name</lable>
-<input type="text" name="name" required><br><br>
-<label name="contact">contact</label>
-<input type="integer" name="Contact" required><br><br>
-<label>address</lable>
-<input type="text" name="address" required><br><br>
-<label name="amount">amount</lable>
-<input type="integer" name="amount" required><br><br>
-<input type="submit" value="Register"></form>
+<body><div class="form">
+<h1>Register</h1>
+<div class="wrapper">
+<form  action='' method='post' autocomplete="off">
+<div class="input-flex"><label class="form-label" for="name">Name</lable>
+<input class="form-input" type="text" name="name" id="name" required/></div>
+<div class="input-flex"><label class="form-label" for="contact">Contact</lable>
+<input class="form-input" type="integer" name="Contact" id="contact" required/></div>
+<div class="input-flex"><label class="form-label" for="address">Address</lable>
+<input class="form-input" type="text" name="address" id="address" required/></div>
+<div class="input-flex"><label class="form-label" for="amount">Amount</lable>
+<input class="form-input" type="integer" name="amount" id="amount" required/></div>
+<input class="btn" type="submit" value="Register"/></form>
+</div></div>
 </body>
 </html>

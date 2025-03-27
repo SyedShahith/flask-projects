@@ -2,36 +2,59 @@
 
 <head>
 <title> Database</title>
-<link rel="stylesheet" value="style.css">
+<link rel="stylesheet" href={{url_for('static',filename="style.css")}}/>
 </head>
 <body>
-<h1>CRUD Operations</h1>
-<p>This page contain database records</p>
-<table border=1>
-<tr><th>ID</th>
-<th>Names</th>
-<th>Contact</th>
-<th>Address</th>
-<th>Amount</th>
-<th>Update</th>
-</tr>
-{% for val in data %}
-<tr>
-<td>{{val.ID}}</td>
-<td>{{val.Name}}</td>
-<td>{{val.Contact}}</td>
-<td>{{val.Address}}</td>
-<td>{{val.Amount}}</td>
-<td><button><a href="{{url_for('edituser',id=val.ID)}}">Edit</button></td>
-<td><button><a href="{{url_for('deleteuser',id=val.ID)}}">Delete</button></td></tr>
+<div class="wrapper">
+    <h1>CRUD Operations</h1>
+    <p>This page contains database records</p>
 
-{% endfor %}
-<br><br>
-<button><a href="{{url_for("addusers")}}">Add</a></button>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Names</th>
+            <th>Contact</th>
+            <th>Address</th>
+            <th>Amount</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+        {% for val in data %}
+        <tr>
+            <td>{{ val.ID }}</td>
+            <td>{{ val.Name }}</td>
+            <td>{{ val.Contact }}</td>
+            <td>{{ val.Address }}</td>
+            <td>{{ val.Amount }}</td>
+            <td><a href="{{ url_for('edituser', id=val.ID) }}"><button style="color:white; background-color:blue;border:none; padding:2px;">Edit</button></a></td>
+            <td><a href="{{ url_for('deleteuser', id=val.ID) }}"><button style="color:white; background-color:blue;border:none; padding:2px;">Delete</button></a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 
-<form action='{{url_for('delete')}}' method='post'>
-<label>enter id to delete</label>
-<input type="integer" name='id' required >
-<input type="submit" value="delete"></form>
+<!-- Make sure buttons and form are OUTSIDE the wrapper -->
+<div class="container">
+    <div class="btn">
+        <button class="mr-3">
+            <a href="{{ url_for('addusers') }}" class="clr">Add</a>
+        </button>
+    </div>
+    <div class="form">
+        <form action="{{ url_for('delete') }}" method="post">
+            <label>Enter ID to delete</label>
+            <input type="number" name="id" required>
+            <input type="submit" value="Delete">
+        </form>
+    </div>
+</div>
+
+<div class="page">
+    {% for i in range(1, total_page + 1) %}
+    <a href="/page/{{ i }}">
+        <button {% if i == page %}disabled{% endif %}>{{ i }}</button>
+    </a>
+    {% endfor %}
+</div>
 </body>
 </html>

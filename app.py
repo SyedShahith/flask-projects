@@ -1,6 +1,6 @@
 from flask import Flask,render_template,url_for,request,redirect
 from flask_mysqldb import MySQL
-
+import math
 app=Flask(__name__)
 app.config["MYSQL_HOST"]="localhost"
 app.config["MYSQL_USER"]="root"
@@ -12,13 +12,25 @@ mysql=MySQL(app)
     
 	
 @app.route("/")
-
-def home():
-    sql="select*from customers"
+@app.route("/page/<int:page>")
+def home(page=1):
+    query="select count(*) from customers"
     con=mysql.connection.cursor()
-    con.execute(sql)
+    con.execute(query)
+    row=con.fetchone()
+    count=row["count(*)"]
+    total_page=count//5+(1 if count%5 !=0 else 0)
+    offset=(page-1)*5
+    nq=f"select * from customers order by id limit 5 offset {offset}"
+    con.execute(nq)
     res=con.fetchall()
-    return render_template("home.html",data=res)
+    return render_template("home.html",data=res,page=page,total_page=total_page)
+        
+        
+        
+        
+
+    
 @app.route("/deleteuser/<string:id>",methods=["GET","POST"])
 def deleteuser(id):
     con=mysql.connection.cursor()
